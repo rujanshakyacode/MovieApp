@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using MovieApp.Data;
 using MovieApp.Models;
 using MovieApp.ViewModel;
-
 
 namespace MovieApp.Controllers
 {
@@ -22,6 +16,8 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies
+        [Authorize(Roles ="Admin,Users")]
+
         public async Task<IActionResult> Index()
         {
             return _context.Movies != null ?
@@ -30,6 +26,8 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies/Details/5
+        [Authorize(Roles = "Admin,Users")]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Movies == null)
@@ -48,6 +46,8 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies/Create
+        [Authorize(Roles = "Admin,Users")]
+
         public IActionResult Create()
         {
             return View();
@@ -56,6 +56,8 @@ namespace MovieApp.Controllers
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,Users")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateMoviesVM model)
@@ -87,6 +89,8 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Admin,Users")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Movies == null)
@@ -107,6 +111,8 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Users")]
+
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseYear,MovieLink,ImagePath")] Movie movie)
         {
             if (id != movie.Id)
@@ -138,6 +144,8 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Movies == null)
@@ -156,6 +164,8 @@ namespace MovieApp.Controllers
         }
 
         // POST: Movies/Delete/5
+        [Authorize(Roles = "Admin")]
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
