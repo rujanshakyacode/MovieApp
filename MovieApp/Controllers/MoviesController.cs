@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieApp.Data;
 using MovieApp.Models;
 using MovieApp.ViewModel;
+using System.Drawing.Printing;
 
 namespace MovieApp.Controllers
 {
@@ -18,11 +19,25 @@ namespace MovieApp.Controllers
         // GET: Movies
         [Authorize(Roles ="Admin,Users")]
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 4)
         {
-            return _context.Movies != null ?
-                        View(await _context.Movies.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
+            var movies = await _context.Movies.ToListAsync();// Get all products from the service
+            var totalItems = movies.Count();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            var items = movies.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            var viewModel = new PaginationViewModel<Movie>
+            {
+                Items = items,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages
+            };
+
+            return viewModel!=null?View(viewModel) : Problem("Something went Wrong");
+
+            
         }
 
         // GET: Movies/Details/5

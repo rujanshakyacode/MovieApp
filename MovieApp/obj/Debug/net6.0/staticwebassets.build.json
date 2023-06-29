@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QUEKpZ4MP/eLSn9W4CR4YWkbJbHHzBQ/N3YKM+jzwyU=",
+  "Hash": "Px1EUYqRZIYUq2t8j+XyXIsL6IOWvdqZPXeQmG0OOUA=",
   "Source": "MovieApp",
   "BasePath": "_content/MovieApp",
   "Mode": "Default",
@@ -1171,6 +1171,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\08233b53-6119-4122-bdff-a7699c70de68WIN_20230622_16_12_19_Pro.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\44739531-d5b1-4770-9ba1-0a80adff4cddSpiderman.jpg",
+      "SourceId": "MovieApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\",
+      "BasePath": "_content/MovieApp",
+      "RelativePath": "images/44739531-d5b1-4770-9ba1-0a80adff4cddSpiderman.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\44739531-d5b1-4770-9ba1-0a80adff4cddSpiderman.jpg"
     },
     {
       "Identity": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\59e7ca1b-698d-406d-917e-a693982c2e4bIMG_20200125_134732.jpg",
