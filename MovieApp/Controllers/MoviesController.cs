@@ -78,6 +78,8 @@ namespace MovieApp.Controllers
                 };
                 _context.Movies.Add(movie);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "Successful Create";
+
             }
             return RedirectToAction(nameof(Index));
         }
@@ -126,6 +128,8 @@ namespace MovieApp.Controllers
                 {
                     _context.Update(movie);
                     await _context.SaveChangesAsync();
+                    TempData["Success"] = "Successful Edit";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -178,6 +182,8 @@ namespace MovieApp.Controllers
             if (movie != null)
             {
                 _context.Movies.Remove(movie);
+                TempData["Success"] = "Delete Successful";
+
             }
 
             await _context.SaveChangesAsync();
