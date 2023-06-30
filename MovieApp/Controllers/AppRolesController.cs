@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class AppRolesController : Controller
+/*    [Authorize(Roles = "Admin")]
+*/    public class AppRolesController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;
         public AppRolesController(RoleManager<IdentityRole> roleManager)
