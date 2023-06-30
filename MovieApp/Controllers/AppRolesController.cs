@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieApp.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AppRolesController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;
         public AppRolesController(RoleManager<IdentityRole> roleManager)
         {
-            _roleManager=roleManager;
+            _roleManager = roleManager;
         }
         public IActionResult Index()
         {
@@ -24,10 +24,12 @@ namespace MovieApp.Controllers
             return View();
         }
 
-        [HttpPost]  
-        public async Task<IActionResult> Create(IdentityRole model) {
-            if (!_roleManager.RoleExistsAsync(model.Name).GetAwaiter().GetResult()) { 
-                 _roleManager.CreateAsync(new IdentityRole(model.Name)).GetAwaiter().GetResult();
+        [HttpPost]
+        public IActionResult Create(IdentityRole model)
+        {
+            if (!_roleManager.RoleExistsAsync(model.Name).GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole(model.Name)).GetAwaiter().GetResult();
             }
             return RedirectToAction("Index");
         }

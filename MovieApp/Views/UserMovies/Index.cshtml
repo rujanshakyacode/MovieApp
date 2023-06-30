@@ -1,6 +1,5 @@
 ﻿@model PaginationViewModel<Movie>
 
-    @if(Model=!null){
 <div class="container">
     <div class="row">
         @foreach (var item in Model.Items)
@@ -32,8 +31,4 @@
         </div>
     </div>
         </div>
-}
-else
-{
-    <h1>No movies found</h1>    
 }
