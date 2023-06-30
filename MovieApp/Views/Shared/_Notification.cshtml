@@ -1,0 +1,21 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/js/toastr.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    
+    <script type="text/javascript">
+        toastr.success('@TempData["Success"]');
+        console.log("Success");
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    
+
+    <script type="text/javascript">
+        toastr.success('@TempData["Error"]'');
+    </script>
+}
