@@ -1,4 +1,4 @@
-﻿@model MovieApp.ViewModel.CreateMoviesVM
+﻿@model MovieApp.Models.Movie
 
 @{
     ViewData["Title"] = "Create";
@@ -28,9 +28,9 @@
                 <span asp-validation-for="MovieLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

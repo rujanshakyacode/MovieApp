@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieApp.Models
 {
@@ -13,5 +14,7 @@ namespace MovieApp.Models
         public string? MovieLink { get; set; }
         [DisplayName("ImagePicuture")]
         public string? ImagePath { get; set;}
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

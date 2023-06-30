@@ -11,7 +11,7 @@ using MovieApp.Data;
 namespace MovieApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230622055521_init")]
+    [Migration("20230630041915_init")]
     partial class init
     {
         /// <inheritdoc />

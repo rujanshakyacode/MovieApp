@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using MovieApp.Data;
 using MovieApp.Models;
-using MovieApp.ViewModel;
+using System.Drawing.Printing;
 
 
 namespace MovieApp.Controllers
@@ -22,10 +22,25 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-            return _context.Movies != null ?
-                        View(await _context.Movies.ToListAsync()) :
+            var movies = await _context.Movies.ToListAsync(); // Get all products from the service
+            var totalItems = movies.Count();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            var items = movies.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            var viewModel = new PaginationViewModel<Movie>
+            {
+                Items = items,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages
+            };
+
+
+            return viewModel != null ?
+                        View(viewModel) :
                         Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
         }
 
@@ -58,24 +73,28 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateMoviesVM model)
+        public async Task<IActionResult> Create(Movie model)
         {
             if (ModelState.IsValid)
             {
                 Guid guid = Guid.NewGuid();
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//");
-                var filepath = "images//" + guid + model.ImagePath.FileName;
-                var fullpath = Path.Combine(path, filepath);
-                UploadFile(model.ImagePath, fullpath);
-                Movie movie = new Movie()
+                if (model.ImageFile != null)
                 {
-                    ImagePath = filepath,
-                    MovieLink = model.MovieLink,
-                    Name = model.Name,
-                    ReleaseYear = model.ReleaseYear,
-                };
-                _context.Movies.Add(movie);
-                await _context.SaveChangesAsync();
+                    string filepath = $"images//{guid}{model.ImageFile.FileName}";
+
+                    var fullpath = Path.Combine(path, filepath);
+                    UploadFile(model.ImageFile, fullpath);
+                    Movie movie = new Movie()
+                    {
+                        ImagePath = filepath,
+                        MovieLink = model.MovieLink,
+                        Name = model.Name,
+                        ReleaseYear = model.ReleaseYear,
+                    };
+                    _context.Movies.Add(movie);
+                    await _context.SaveChangesAsync();
+                }
             }
             return RedirectToAction(nameof(Index));
         }
@@ -107,7 +126,7 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseYear,MovieLink,ImagePath")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseYear,MovieLink,ImagePath,ImageFile")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -118,8 +137,18 @@ namespace MovieApp.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
-                    await _context.SaveChangesAsync();
+                    Guid guid = Guid.NewGuid();
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//");
+                    if (movie.ImageFile != null)
+                    {
+
+                        var filepath = "images//" + guid + movie.ImageFile.FileName;
+                        var fullpath = Path.Combine(path, filepath);
+                        UploadFile(movie.ImageFile, fullpath);
+                        movie.ImagePath = filepath;
+                        _context.Update(movie);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

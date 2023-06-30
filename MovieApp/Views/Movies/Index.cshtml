@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieApp.Models.Movie>
+﻿@model MovieApp.Models.PaginationViewModel<Movie>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,26 +9,28 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@if (Model !=null){
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleaseYear)
+                ReleaseData
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MovieLink)
+                MovieLink
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
+                ImagePath
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+       
+@foreach (var item in Model.Items) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -50,3 +52,23 @@
 }
     </tbody>
 </table>
+<div class="pagination-container">
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <a href="@Url.Action("Index", new { pageNumber = i })" class="active">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            }
+        }
+    </div>
+        </div>
+}
+else
+{
+<h1>Movies not found.</h1>    
+}
