@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Build.Framework;
+using MovieApp.Repository.Interface;
+using MovieApp.Repository.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddTransient<IMovieService, MovieService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

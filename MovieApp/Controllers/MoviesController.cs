@@ -9,23 +9,24 @@ using Microsoft.AspNetCore.Hosting;
 using MovieApp.Data;
 using MovieApp.Models;
 using System.Drawing.Printing;
-
+using MovieApp.Repository.Interface;
 
 namespace MovieApp.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public MoviesController(ApplicationDbContext context)
+        private readonly IMovieService _movieService;
+
+        public MoviesController(IMovieService movieService)
         {
-            _context = context;
+            _movieService = movieService;
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+        public IActionResult Index()
         {
-            var movies = await _context.Movies.ToListAsync(); // Get all products from the service
-            var totalItems = movies.Count();
+            var movies = _movieService.GetAllPaged(1, 10); // Get all products from the service
+            /*var totalItems = movies.Count;
 
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             var items = movies.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
@@ -36,24 +37,23 @@ namespace MovieApp.Controllers
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalPages = totalPages
-            };
+            };*/
 
 
-            return viewModel != null ?
-                        View(viewModel) :
+            return movies != null ?
+                        View(movies) :
                         Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
         }
 
         // GET: Movies/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = _movieService.GetById(id);
             if (movie == null)
             {
                 return NotFound();
@@ -73,11 +73,11 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Movie model)
+        public IActionResult Create(Movie model)
         {
             if (ModelState.IsValid)
             {
-                Guid guid = Guid.NewGuid();
+                /*Guid guid = Guid.NewGuid();
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//");
                 if (model.ImageFile != null)
                 {
@@ -94,26 +94,33 @@ namespace MovieApp.Controllers
                     };
                     _context.Movies.Add(movie);
                     await _context.SaveChangesAsync();
+                }*/
+                bool isSuccess = _movieService.Insert(model);
+                if (isSuccess == false)
+                {
+                    return Problem("Failed To insert data");
                 }
+
             }
             return RedirectToAction(nameof(Index));
+
         }
-        public void UploadFile(IFormFile file, string path)
+        /*public void UploadFile(IFormFile file, string path)
         {
             FileStream stream = new FileStream(path, FileMode.Create);
             file.CopyTo(stream);
 
-        }
+        }*/
 
         // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
+            var movie = _movieService.GetById(id);
             if (movie == null)
             {
                 return NotFound();
@@ -126,7 +133,7 @@ namespace MovieApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseYear,MovieLink,ImagePath,ImageFile")] Movie movie)
+        public IActionResult Edit(int id, [Bind("Id,Name,ReleaseYear,MovieLink,ImagePath,ImageFile")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -137,7 +144,7 @@ namespace MovieApp.Controllers
             {
                 try
                 {
-                    Guid guid = Guid.NewGuid();
+                    /*Guid guid = Guid.NewGuid();
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//");
                     if (movie.ImageFile != null)
                     {
@@ -148,7 +155,9 @@ namespace MovieApp.Controllers
                         movie.ImagePath = filepath;
                         _context.Update(movie);
                         await _context.SaveChangesAsync();
-                    }
+                    }*/
+                    _movieService.Update(movie);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -167,15 +176,14 @@ namespace MovieApp.Controllers
         }
 
         // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var movie = _movieService.GetById(id);
             if (movie == null)
             {
                 return NotFound();
@@ -187,25 +195,36 @@ namespace MovieApp.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            if (_context.Movies == null)
+            /* if (_context.Movies == null)
+             {
+                 return Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
+             }
+             var movie = await _context.Movies.FindAsync(id);
+             if (movie != null)
+             {
+                 _context.Movies.Remove(movie);
+             }
+
+             await _context.SaveChangesAsync();*/
+            bool IsSuccess = _movieService.Delete(id);
+            if (IsSuccess == false)
             {
-                return Problem("Entity set 'ApplicationDbContext.Movies'  is null.");
-            }
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie != null)
-            {
-                _context.Movies.Remove(movie);
+                return Problem("Failed to Delete", null, 400);
+
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MovieExists(int id)
         {
-            return (_context.Movies?.Any(e => e.Id == id)).GetValueOrDefault();
+            if (_movieService.GetById(id) == null)
+            {
+                return false;
+            }
+            return true;
         }
 
 

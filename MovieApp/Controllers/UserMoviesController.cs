@@ -2,34 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Data;
 using MovieApp.Models;
+using MovieApp.Repository.Interface;
 
 namespace MovieApp.Controllers
 {
     public class UserMoviesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public UserMoviesController(ApplicationDbContext context)
+        private readonly IMovieService _movieService;
+
+        public UserMoviesController(ApplicationDbContext context, IMovieService movieService)
         {
             _context = context;
+            _movieService = movieService;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 4)
+        public IActionResult Index(int pageNumber, int pageSize)
         {
-            var movies = await _context.Movies.ToListAsync();// Get all products from the service
-            var totalItems = movies.Count();
+            var movies = _movieService.GetAllPaged(1, 4);
 
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-            var items = movies.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
-            var viewModel = new PaginationViewModel<Movie>
-            {
-                Items = items,
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                TotalPages = totalPages
-            };
-
-            return viewModel != null ? View(viewModel) : Problem("Something went Wrong");
+            return movies != null ? View(movies) : Problem("Something went Wrong");
 
 
         }
