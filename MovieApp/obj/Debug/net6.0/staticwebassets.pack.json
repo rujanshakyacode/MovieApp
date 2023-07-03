@@ -17,6 +17,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\42098cc7-7ff3-431a-86c7-4659f8c227fdSpiderman2.jpg",
+      "PackagePath": "staticwebassets\\images\\42098cc7-7ff3-431a-86c7-4659f8c227fdSpiderman2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\5a0b6594-58b3-4105-b1d8-a95844d86f8eSpiderman3.jpg",
+      "PackagePath": "staticwebassets\\images\\5a0b6594-58b3-4105-b1d8-a95844d86f8eSpiderman3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\c07ae3ae-d889-4e3b-8655-b0a653702dd7Spiderman.jpg",
+      "PackagePath": "staticwebassets\\images\\c07ae3ae-d889-4e3b-8655-b0a653702dd7Spiderman.jpg"
+    },
+    {
       "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

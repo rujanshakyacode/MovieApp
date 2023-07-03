@@ -7,7 +7,7 @@ namespace MovieApp.Models
     {
         [ForeignKey("movies")]
         public int MovieId { get; set; }
-        public Movie? movies { get; set; }
+        public Movie? Movies { get; set; }
         public int UserId { get; set; }
 
     }
