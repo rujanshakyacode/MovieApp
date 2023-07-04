@@ -98,9 +98,10 @@ namespace MovieApp.Controllers
                 bool isSuccess = _movieService.Insert(model);
                 if (isSuccess == false)
                 {
-                    return Problem("Failed To insert data");
+                    TempData["Error"] = "Failed to Create Movie";
+                    return RedirectToAction(nameof(Index));
                 }
-
+                TempData["Success"] = "Movie Created Successfully";
             }
             return RedirectToAction(nameof(Index));
 
@@ -156,7 +157,16 @@ namespace MovieApp.Controllers
                         _context.Update(movie);
                         await _context.SaveChangesAsync();
                     }*/
-                    _movieService.Update(movie);
+                    bool IsSuccess=_movieService.Update(movie);
+                    if (IsSuccess == true)
+                    {
+                        TempData["Success"] = "Movie Updated Successfully";
+                    }
+                    else {
+                        TempData["Error"] = "Movie Updated Failed";
+
+                    }
+
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -170,8 +180,10 @@ namespace MovieApp.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(movie);
         }
 
@@ -184,6 +196,7 @@ namespace MovieApp.Controllers
             }
 
             var movie = _movieService.GetById(id);
+
             if (movie == null)
             {
                 return NotFound();
@@ -211,9 +224,12 @@ namespace MovieApp.Controllers
             bool IsSuccess = _movieService.Delete(id);
             if (IsSuccess == false)
             {
-                return Problem("Failed to Delete", null, 400);
+                TempData["Error"] = "Movie Deleted Failed";
+
+                return RedirectToAction(nameof(Index));
 
             }
+            TempData["Success"] = "Movie Deleted Successfully";
 
             return RedirectToAction(nameof(Index));
         }
