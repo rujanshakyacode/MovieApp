@@ -1,0 +1,36 @@
+﻿@model MovieApp.Models.Movie
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+
+            <h4>Movie</h4>
+            <div class="container">
+                <img src="/@Model.ImagePath" />
+                <p>Name:@Model.Name</p>
+                <p>Released Year:@Model.ReleaseYear</p>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <h4>Comments</h4>
+            <form method="post" asp-action="Comment">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

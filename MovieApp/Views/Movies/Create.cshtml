@@ -1,5 +1,4 @@
-﻿@model MovieApp.Models.Movie
-
+﻿@model MovieApp.Models.Movie;
 @{
     ViewData["Title"] = "Create";
 }
@@ -43,5 +42,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

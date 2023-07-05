@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieApp.Data;
+using MovieApp.DataAccess;
+using MovieApp.DataAccess.Repository.Interface;
 using MovieApp.Models;
-using MovieApp.Repository.Interface;
 
 namespace MovieApp.Controllers
 {

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using MovieApp.Data;
+
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Build.Framework;
-using MovieApp.Repository.Interface;
-using MovieApp.Repository.Services;
+using MovieApp.DataAccess.Repository.Interface;
+using MovieApp.DataAccess.Repository.Services;
+using MovieApp.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 

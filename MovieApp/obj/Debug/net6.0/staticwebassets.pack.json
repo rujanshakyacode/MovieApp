@@ -25,6 +25,22 @@
       "PackagePath": "staticwebassets\\images\\659ce182-7f8f-458e-a6fb-39b94ea6e492Spiderman.jpg"
     },
     {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\82d81bd6-05eb-44da-bb95-325c40c0052cFlash.jpg",
+      "PackagePath": "staticwebassets\\images\\82d81bd6-05eb-44da-bb95-325c40c0052cFlash.jpg"
+    },
+    {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\9766e2bc-1cd6-4817-95c0-45a5c63c1f02WIN_20230622_16_11_42_Pro.jpg",
+      "PackagePath": "staticwebassets\\images\\9766e2bc-1cd6-4817-95c0-45a5c63c1f02WIN_20230622_16_11_42_Pro.jpg"
+    },
+    {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\d19bd9c7-f188-4f57-baae-6eaadf32952aFlash.jpg",
+      "PackagePath": "staticwebassets\\images\\d19bd9c7-f188-4f57-baae-6eaadf32952aFlash.jpg"
+    },
+    {
+      "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\images\\hello.txt",
+      "PackagePath": "staticwebassets\\images\\hello.txt"
+    },
+    {
       "Id": "C:\\Users\\rujan\\OneDrive\\Desktop\\Codeology\\Codeology\\MovieManagement\\MovieApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

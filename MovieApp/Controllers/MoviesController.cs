@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
-using MovieApp.Data;
 using MovieApp.Models;
 using System.Drawing.Printing;
-using MovieApp.Repository.Interface;
+using MovieApp.DataAccess.Repository.Interface;
 
 namespace MovieApp.Controllers
 {
@@ -157,12 +156,13 @@ namespace MovieApp.Controllers
                         _context.Update(movie);
                         await _context.SaveChangesAsync();
                     }*/
-                    bool IsSuccess=_movieService.Update(movie);
+                    bool IsSuccess = _movieService.Update(movie);
                     if (IsSuccess == true)
                     {
                         TempData["Success"] = "Movie Updated Successfully";
                     }
-                    else {
+                    else
+                    {
                         TempData["Error"] = "Movie Updated Failed";
 
                     }
